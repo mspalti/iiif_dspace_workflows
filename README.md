@@ -24,37 +24,88 @@ These requirements have implications that merit consideration.
 The screenshot below shows a record in which bitstreams in the `IIIF` bundle are rendered in the viewer. Meanwhile, a link to the
 PDF version of the item is provided in the DSpace UI. Note that the PDF version can also be downloaded via the Mirador viewer.
 
-![item image](images/sample_rec.png "Item")
-
-Overall, the decision to rely on bundles rather than extending bitstream metadata with IIIF fields or using the new 
-entity-relationship features of DSpace probably deserves analysis and discussion. My sense is that the bundle layer 
+Overall, the decision to rely on bundles probably deserves analysis and discussion. My sense is that the bundle layer
 provides a clean and helpful separation for managing assets and creating views but there may be other ways to look
 at this.
+
+![item image](images/sample_rec.png "Item")
+
 
 
 # Additional metadata using info.json
 
-Existing DSpace bundles and bitstreams do not address every requirement. In particular, bitstream objects lack 3 metadata fields
-that are important for the IIIF implementation. The ability to add meaningful labels to bitstreams, such as "cover", "chapter",
+Bitstream objects lack 3 metadata fields
+that are important for the IIIF implementation. One is the ability to add meaningful labels to bitstreams, such as "cover", "chapter",
 "side", "back", and other more domain-specific labels is a basic requirement. The IIIF spec also recommends accurate height and width 
-dimensions for canvases, based on the size of image to be rendered. These requirements could be accommodated by adding metadata
-fields to the bitstream. For now, that is seems beyond the scope of the initial pull request and I opted
+dimensions for canvases, based on the size of image to be rendered. These requirements could be addressed by adding metadata
+fields to the bitstream. For now, that is beyond the scope of the initial pull request and I opted
 instead to provide this metadata via a json file that resides in the `IIIF` bundle. 
 
-The `info.json` file is a work-in-progress. Details are provided in the PR description. This `info.json` file is not required but is 
-recommended.  Without the file the IIIF manifest will be rendered using default labels and height/width values.
+The `info.json` file is a work-in-progress. Details are [provided in the PR description](https://github.com/DSpace/DSpace/pull/3210). 
+Note that this `info.json` file is not required ... but is recommended.  Without the file the IIIF manifest will be 
+rendered using default labels and height/width values.
 
-One caveat is that there is currently no tooling for creating or modifying the `info.json` file. This would not be difficult to
-create, whether the for the `info.json` file itself or for additional bitstream metadata if we decide that's the best solution. 
+One caveat is that there's currently no tooling for creating or modifying the `info.json` file. This would not be difficult to
+create in a separate PR, either the for the `info.json` file itself or for additional bitstream metadata if we decide that's 
+the best solution.
 
-One final note about IIIF metadata.  IIIF `ranges` are a nifty way to add supplemental navigation to a multi-image document. I've
-included this in the `info.json sequences` property as an array. It may be possible to create ranges by adding a range property
-to bitstream metadata. 
-
-
-
-
-
-# Requirements
+One final note about metadata.  IIIF `ranges` are a nifty way to create navigation within a multi-image document. I've
+included this in the `info.json sequences` property as an array. It may also be possible to create manifest ranges by adding a 
+range property to bitstream metadata. 
 
 
+# Additional Requirements
+
+Creating a record with images in the IIIF bundle and with an IIIF entity.type will embed the Mirador viewer in the
+Angular UI and query the REST API for the manifest. To render images the viewer needs to know how to request images from
+the image server.
+
+## Image Server
+
+Here's a quick overview of my cantaloupe image server is integrated with DSpace.  
+
+The path to the server provided in an IIIF configuration property in my local.cfg.
+
+`iiif.image.server = https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/`
+
+This is used in the image service definition that is returned by the DSpace REST API as part of the IIIF manifest:
+
+```
+service: {
+  @context: "http://iiif.io/api/image/2/context.json",
+  @id: "https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/181c0dd2-e661-43d8-8bbc-648705bfe490",
+  profile: "http://iiif.io/api/image/2/level1.json",
+}
+
+```
+
+Here is an example of the Image API request URL from Mirador to my cantaloupe server:
+
+`https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/181c0dd2-e661-43d8-8bbc-648705bfe490/full/674,/0/default.jpg`
+
+Cantaloupe is configured to use an `HttpSource` and a `ScriptLookupStrategy` defined in `delegates.rb`. It retrieves the image 
+from DSpace and returns the processed image.
+
+```
+def httpsource_resource_info(options = {})
+        identifier = context['identifier']
+        identifier.gsub(/^(.{36})/, "http://dspace-new.willamette.edu:8080/server/api/core/bitstreams/\\1/content")
+  end
+  ```
+
+## Solr Search Index
+
+
+# Import Process
+
+Because I have a large data migration in mind, I am using the Simple Archive Format to batch import items to DSpace. Here's 
+an abbreviated contents file that illustrates the bundles and files described above. 
+
+```
+199701.pdf
+alto_1.xml  bundle:OtherContent
+alto_2.xml  bundle:OtherContent
+001.jp2 bundle:IIIF
+002.jp2	bundle:IIIF
+info.json	bundle:IIIF
+```
