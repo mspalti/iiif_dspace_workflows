@@ -37,10 +37,10 @@ at this.
 # Additional metadata using info.json
 
 Bitstream objects lack 3 metadata fields
-that are important for the IIIF implementation. One is the ability to add meaningful labels to bitstreams, such as "cover", "chapter",
+that are important for the IIIF implementation. The ability to add meaningful labels to bitstreams, such as "cover", "chapter",
 "side", "back", and other more domain-specific labels is a basic requirement. The IIIF spec also recommends accurate height and width 
 dimensions for canvases, based on the size of image to be rendered. These requirements could be addressed by adding metadata
-fields to the bitstream. For now, that is beyond the scope of the initial pull request and I opted
+fields to the bitstream. For now, that is beyond the scope of the initial pull request. I opted
 instead to provide this metadata via a json file that resides in the `IIIF` bundle. 
 
 The `info.json` file is a work-in-progress. Details are [provided in the PR description](https://github.com/DSpace/DSpace/pull/3210). 
@@ -58,8 +58,8 @@ range property to bitstream metadata.
 
 # Additional Requirements
 
-Creating a record with images in the IIIF bundle and with an IIIF entity.type will embed the Mirador viewer in the
-Angular UI and query the REST API for the manifest. To render images the viewer needs to know how to request images from
+Creating a record with images in the `IIIF` bundle and with an IIIF `entity.type` will embed the Mirador viewer in the
+Angular UI and query the REST API for the manifest. To render images, the viewer needs to know how to request images from
 the image server.
 
 ## Image Server
