@@ -47,8 +47,8 @@ The `info.json` file is a work-in-progress. Details are [provided in the PR desc
 Note that this `info.json` file is not required ... but is recommended.  Without the file the IIIF manifest will be 
 rendered using default labels and height/width values.
 
-One caveat is that there's currently no tooling for creating or modifying the `info.json` file. This would not be difficult to
-create in a separate PR, either the for the `info.json` file itself or for additional bitstream metadata if we decide that's 
+One caveat is that there's currently no tooling for creating or modifying the `info.json` file. It would not be difficult to
+do this in a separate PR, either the for the `info.json` file itself or for additional bitstream metadata if we decide that's 
 the best solution.
 
 One final note about metadata.  IIIF `ranges` are a nifty way to create navigation within a multi-image document. I've
