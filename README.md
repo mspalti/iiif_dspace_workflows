@@ -62,13 +62,14 @@ the image server.
 
 ## Image Server
 
-Here's a quick overview of my cantaloupe image server is integrated with DSpace.  
+Here's a quick description of how the cantaloupe image server is integrated with DSpace.  
 
-The path to the server provided in an IIIF configuration property in my local.cfg.
+The path to the server provided in an IIIF configuration property in local.cfg.
 
 `iiif.image.server = https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/`
 
-This is used in the image service definition that is returned by the DSpace REST API as part of the IIIF manifest:
+This configuration property is used in the image service definition that is embedded in the IIIF manifest
+and returned by the DSpace REST API to Mirador:
 
 ```
 service: {
@@ -79,7 +80,7 @@ service: {
 
 ```
 
-Here is an example of the Image API request URL from Mirador to my cantaloupe server:
+Here is an example of the Image API request URL from Mirador to the cantaloupe server:
 
 `https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/181c0dd2-e661-43d8-8bbc-648705bfe490/full/674,/0/default.jpg`
 
@@ -95,6 +96,8 @@ def httpsource_resource_info(options = {})
 
 ## Solr Search Index
 
+The IIIF Search API uses a Solr index.  Details are [described in the pull request](https://github.com/DSpace/DSpace/pull/3210).
+
 
 # Import Process
 
@@ -109,3 +112,10 @@ alto_2.xml  bundle:OtherContent
 002.jp2	bundle:IIIF
 info.json	bundle:IIIF
 ```
+
+For the Search API and Solr index, I am currently populating Solr with separate Python load process.  I think there is a 
+way to integrate this more closely with the DSpace ingestion process by requiring inclusion of ALTO files in the `OtherContent` 
+bundle. This would allow a separate process running on the Solr server to retrieve item manifests and ALTO files via 
+an AnnotationList and use this information to build and maintain the Solr index. Perhaps ultimately providing a way to 
+automatically synchronize the Solr index with items that use the Search API, or at least make it easy to manually trigger
+an update of items from a collection.
