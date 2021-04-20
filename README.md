@@ -1,10 +1,11 @@
 # Overview
 
-This IIIF proposal relies on two basic features of DSpace. 
+This IIIF proposal relies on two core features of DSpace. 
 
 * The `bundle` layer. The implementation uses bundles to identify bitstreams that will be added 
   to IIIF canvases (the `IIIF` bundle) or to related resource annotation lists (the `OtherContent` bundle). 
   The bundles also assures that bitstreams (and therefore canvases) appear in the proper order.
+  
 * The `entity.type` feature. This is new with DSpace 7 and is used to flag items as IIIF resources. 
   Items with an `entity.type` of `IIIF` or `IIIFSearchable` incorporate the Mirador viewer into the  
   display and initialize the viewer with the manifest URL of the item. Also, `IIIFSearchable` entities are  
@@ -18,6 +19,7 @@ These requirements have implications that merit consideration.
 * The assets in the `IIIF` bundle are viewed and accessed only via the IIIF viewer. The IIIF viewer also provides 
   downloads and citation information for these assets. Any bitstreams in the default `ORIGINAL` bundle continue to 
   be accessed via the DSpace Item UI as before. 
+  
 * Existing DSpace records with images in the `ORIGINAL` bundle need to be modified by transferring assets to the 
   `IIIF` bundle. There may of course be ways to avoid this requirement, but those have not yet been explored.  
   
