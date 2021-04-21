@@ -71,9 +71,11 @@ need to provide an `info.json` file if you want to create IIIF views with custom
 
 # Additional Requirements
 
-Creating a record that has images in the `IIIF` bundle and an IIIF `entity.type` embeds the Mirador viewer in the
-Angular UI and queries the REST API for the item manifest. To render images the viewer needs to know how to request images from
-the image server. For searchable items the IIIF REST endpoint needs the location of the Solr index.
+When you create a record that has images in the `IIIF` bundle and an IIIF `entity.type`, the Mirador viewer is embedded in the
+Angular UI and the REST API is queried for the Item manifest. In IIIF lingo, these steps rely on the IIIF the Presentation API. 
+To render images the viewer needs to know how to request images from the image server (IIIF Image API). For searchable 
+items, the REST endpoint also needs to know the location of the Solr index (IIIF Search API). This configuration information is provided
+in new DSpace configuration properties.
 
 ## Image Server
 
