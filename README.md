@@ -8,8 +8,8 @@ This IIIF proposal relies on two core features of DSpace.
   
 * The `entity.type` feature: This is new with DSpace 7 and is used to flag items as IIIF resources. 
   Items with an `entity.type` of `IIIF` or `IIIFSearchable` will add the Mirador viewer to the 
-  display and provide the manifest URL of the item to viewer. `IIIFSearchable` entities are 
-  initialized with the search results when the item is retrieved from a DSpace discovery result list.
+  display. `IIIFSearchable` entities are also initialized with the search results when the item has 
+  been selected from a DSpace discovery result list.
 
 To render an item as IIIF _both_ conditions are required.  The `entity.type` must be one of the IIIF types 
 and bitstreams must be in the `IIIF` bundle.
@@ -24,7 +24,7 @@ These requirements have implications.
   `IIIF` bundle. There may of course be ways to avoid this requirement, but those have not yet been explored.  
   
 The screenshot below shows a record in which bitstreams in the `IIIF` bundle are rendered in the viewer. Meanwhile, a link to the
-PDF version of the item is provided in the DSpace UI. Note that the PDF version can also be downloaded via the Mirador viewer.
+PDF version of the item is provided in the DSpace UI. (Note that the PDF version can also be downloaded via the Mirador viewer.)
 
 Overall, the decision to rely on bundles probably deserves analysis and discussion. My sense is that the bundle layer
 provides a clean and helpful separation for managing assets and creating views but there may be other ways to look
@@ -40,20 +40,24 @@ Bitstream objects lack 3 metadata fields
 that are important for the IIIF implementation. The ability to add meaningful labels to bitstreams, such as "cover", "chapter",
 "side", "back", and other more domain-specific labels is a basic requirement. The IIIF spec also recommends accurate height and width 
 dimensions for canvases, based on the size of image to be rendered. These requirements could be addressed by adding metadata
-fields to the bitstream. For now, that is beyond the scope of the initial pull request. I opted
+fields to the bitstream. For now, that's beyond the scope of this initial pull request. I opted
 instead to provide this metadata via a json file that resides in the `IIIF` bundle. 
 
 The `info.json` file is a work-in-progress. Details are [provided in the PR description](https://github.com/DSpace/DSpace/pull/3210). 
 Note that this `info.json` file is not required ... but is recommended.  Without the file the IIIF manifest will be 
 rendered using default labels and height/width values.
 
-One caveat is that there's currently no tooling for creating or modifying the `info.json` file. It would not be difficult to
-do this in a separate PR, either for the `info.json` file itself or for additional bitstream metadata if we decide that's 
-the best solution.
+One caveat is that there's currently no tooling for creating or modifying the `info.json` file. Such tooling would not be 
+difficult to create in a separate PR, either for the `info.json` file itself or for additional bitstream metadata if we decide that's 
+the best solution. 
 
 One final note about metadata.  IIIF `ranges` are a nifty way to create navigation within a multi-image document. I've
-included this in the `info.json sequences` property as an array. It may also be possible to create manifest ranges by adding a 
-range property to bitstream metadata. 
+included this in the `info.json sequences` property as an array. Alternatively, it may be possible to create manifest ranges 
+by adding a 4th additional property for `ranges` to bitstream metadata. 
+
+So to sum up, I added the `info.json` file as a way to provide metadata needed by IIIF without making additions to the existing DSpace data model.
+I think those additions would be reasonable since they involve just a few additional properties for bitstreams. But meanwhile, you'll
+need to provide an `info.json` file if you want to create IIIF views with custom properties.
 
 
 # Additional Requirements
