@@ -92,7 +92,7 @@ from DSpace and returns the processed image.
 ```
 def httpsource_resource_info(options = {})
         identifier = context['identifier']
-        identifier.gsub(/^(.{36})/, "http://dspace-new.willamette.edu:8080/server/api/core/bitstreams/\\1/content")
+        identifier.gsub(/^(.{36})/, "http://dspace-test.willamette.edu:8080/server/api/core/bitstreams/\\1/content")
   end
   ```
 
