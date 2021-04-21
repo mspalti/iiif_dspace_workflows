@@ -11,8 +11,8 @@ This IIIF proposal relies on two core features of DSpace.
   display and provide the manifest URL of the item to viewer. `IIIFSearchable` entities are 
   initialized with the search results when the item is retrieved from a DSpace discovery result list.
 
-To render an item as IIIF both conditions are required.  The `entity.type` must be one of the two IIIF types, 
-and bitstreams must be added to the `IIIF` bundle.
+To render an item as IIIF _both_ conditions are required.  The `entity.type` must be one of the IIIF types 
+and bitstreams must be in the `IIIF` bundle.
 
 These requirements have implications.
 
