@@ -123,6 +123,6 @@ info.json	bundle:IIIF
 
 For the Search API and Solr index, I am currently populating Solr with separate Python load process.  I think there is a 
 way to integrate this more closely with the DSpace ingest process by requiring inclusion of ALTO files in the `OtherContent` 
-bundle. That would end the need for an entirely separate load process. Instead, a separate process running on the Solr server 
-could use the DSpace API to retrieve manifests and ALTO files via the `seeAlso` AnnotationList and use this information to 
+bundle. That would end the need for an entirely separate load process. Instead, a process running on the Solr server 
+could use the DSpace IIIF API to retrieve manifests and ALTO files via the `seeAlso` AnnotationList and use this information to 
 maintain the Solr index. 
