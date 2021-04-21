@@ -70,7 +70,7 @@ The path to the server is provided in an IIIF configuration property in `local.c
 
 `iiif.image.server = https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/`
 
-This configuration property is used in the image service definition that is embedded in the IIIF manifest
+This configuration property is used in the image service definition that gets embedded in the IIIF manifest
 and returned by the DSpace REST API to Mirador:
 
 ```
