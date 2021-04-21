@@ -1,3 +1,12 @@
+
+The document attempts to describe implementation and ingest procedures as they relate to 
+a proposed IIIF feature for DSpace 7 that is currently under review. Feedback and questions
+are appreciated.
+
+* https://github.com/DSpace/dspace-angular/pull/1079
+* https://github.com/DSpace/DSpace/pull/3210
+
+
 # Overview
 
 This IIIF proposal relies on two core features of DSpace. 
