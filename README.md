@@ -105,7 +105,7 @@ def httpsource_resource_info(options = {})
 The IIIF Search API uses a Solr index.  Details are [described in the pull request](https://github.com/DSpace/DSpace/pull/3210).
 
 The location of the Solr service is defined in `local.cfg`. The REST backend will use this when responding to IIIF Search API requests
-sent by Mirador viewer.
+sent by the Mirador viewer.
 
 `iiif.solr.search.url = http://localhost:8983/solr/word_highlighting`
 
