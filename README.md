@@ -66,7 +66,7 @@ the image server.
 
 Here's a quick description of how the cantaloupe image server is integrated with DSpace.  
 
-The path to the server provided in an IIIF configuration property in local.cfg.
+The path to the server is provided in an IIIF configuration property in `local.cfg`.
 
 `iiif.image.server = https://digitalcollections.willamette.edu/image-server/cantaloupe-4.1.7/iiif/2/`
 
