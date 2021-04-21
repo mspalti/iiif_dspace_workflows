@@ -104,7 +104,7 @@ The IIIF Search API uses a Solr index.  Details are [described in the pull reque
 # Import Process
 
 Because I have a large data migration in mind, I am using the Simple Archive Format to batch import items to DSpace. Here's 
-an abbreviated contents file that illustrates the bundles and files described above. 
+an abbreviated contents file that shows files imported into the bundles described above. 
 
 ```
 199701.pdf
@@ -116,8 +116,7 @@ info.json	bundle:IIIF
 ```
 
 For the Search API and Solr index, I am currently populating Solr with separate Python load process.  I think there is a 
-way to integrate this more closely with the DSpace ingestion process by requiring inclusion of ALTO files in the `OtherContent` 
-bundle. This would allow a separate process running on the Solr server to retrieve item manifests and ALTO files via 
-an AnnotationList and use this information to build and maintain the Solr index. Perhaps ultimately providing a way to 
-automatically synchronize the Solr index with items that use the Search API, or at least make it easy to manually trigger
-an update of items from a collection.
+way to integrate this more closely with the DSpace ingest process by requiring inclusion of ALTO files in the `OtherContent` 
+bundle. That would end the need for an entirely separate load process. Instead, a separate process running on the Solr server 
+could use the DSpace API to retrieve manifests and ALTO files via the `seeAlso` AnnotationList and use this information to 
+maintain the Solr index. 
