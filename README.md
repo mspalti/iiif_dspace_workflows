@@ -58,9 +58,9 @@ range property to bitstream metadata.
 
 # Additional Requirements
 
-Creating a record with images in the `IIIF` bundle and with an IIIF `entity.type` will embed the Mirador viewer in the
-Angular UI and query the REST API for the manifest. To render images, the viewer needs to know how to request images from
-the image server.
+Creating a record that has images in the `IIIF` bundle and an IIIF `entity.type` embeds the Mirador viewer in the
+Angular UI and queries the REST API for the item manifest. To render images the viewer needs to know how to request images from
+the image server. For searchable items the IIIF REST endpoint needs the location of the Solr index.
 
 ## Image Server
 
@@ -99,6 +99,12 @@ def httpsource_resource_info(options = {})
 ## Solr Search Index
 
 The IIIF Search API uses a Solr index.  Details are [described in the pull request](https://github.com/DSpace/DSpace/pull/3210).
+
+The location of the Solr service is defined in `local.cfg`. The REST backend will use this when responding to IIIF Search API requests
+sent by Mirador viewer.
+
+`iiif.solr.search.url = http://localhost:8983/solr/word_highlighting`
+
 
 
 # Import Process
