@@ -15,13 +15,15 @@ This IIIF proposal relies on two core features of DSpace.
   to IIIF canvases (the `IIIF` bundle) or to related resource annotation lists (the `OtherContent` bundle). 
   The bundles also assure that bitstreams (and therefore canvases) appear in the proper order in the manifest.
   
-* The `entity.type` feature: This is new with DSpace 7 and is used to flag items as IIIF resources. 
-  Items with an `entity.type` of `IIIF` or `IIIFSearchable` will add the Mirador viewer to the 
-  display. `IIIFSearchable` entities are also initialized with the search results when the item has 
+* The `entity type` feature: This is new with DSpace 7 and is used to flag items as IIIF resources. 
+  Items with a `dspace.entity.type` metadata field with a value of `IIIF` or `IIIFSearchable` adds the Mirador 
+  viewer to the display. `IIIFSearchable` entities are initialized with the search results when the item has 
   been selected from a DSpace discovery result list.
 
-To render an item as IIIF _both_ conditions are required.  The `entity.type` must be one of the IIIF types 
+To render an item as IIIF _both_ conditions are required.  The `dspace.entity.type` must be one of the IIIF types 
 and bitstreams must be in the `IIIF` bundle.
+
+Note that only the `dspace.entity.type` metadata field is required. There's no need to configure a `relationship-type` for IIIF entities.
 
 These requirements have implications.
 
